@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>PocketChest</title>
+		<meta name="description" content="ファイルとテキストを手早く共有" />
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="apple-touch-icon" href="/favicon.png" />
+		<link rel="stylesheet" href="/shared/globals.css" />
+	</head>
+	<body>
+		<main class="min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+			<div class="max-w-4xl w-full">
+				<nav class="flex justify-end gap-4 mb-6 text-sm" aria-label="言語">
+					<a href="/zh-Hant/" hreflang="zh-Hant" lang="zh-Hant" class="text-blue-600 hover:text-blue-800 underline">繁體中文</a>
+					<a href="/ja/" hreflang="ja" lang="ja" class="text-blue-600 hover:text-blue-800 underline">日本語</a>
+					<a href="/en/" hreflang="en" lang="en" class="text-blue-600 hover:text-blue-800 underline">English</a>
+				</nav>
+				<div class="text-center mb-12">
+					<div class="text-8xl mb-6">📦</div>
+					<h1 class="text-4xl sm:text-6xl font-bold text-gray-900 mb-4">PocketChest</h1>
+					<p class="text-xl text-gray-600 max-w-2xl mx-auto">
+						安全な一時ファイル共有。ファイルやテキストをアップロードしてコードを取得し、どこへでも共有できます。
+					</p>
+				</div>
+
+				<div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+					<a href="/upload/?lang=ja" class="group block">
+						<div
+							class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 text-center border-2 border-transparent hover:border-blue-200 transform hover:scale-105 h-full flex flex-col"
+						>
+							<div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">📤</div>
+							<h2 class="text-3xl font-bold text-gray-900 mb-3">ファイルを共有</h2>
+							<p class="text-gray-600 mb-6 leading-relaxed flex-1">
+								ファイルやテキストをアップロードして、安全な取り出しコードを作成します。有効期限を設定して、誰とでも共有できます。
+							</p>
+							<div class="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold group-hover:bg-blue-600 transition-colors duration-300">
+								共有を始める
+							</div>
+						</div>
+					</a>
+
+					<a href="/retrieve/?lang=ja" class="group block">
+						<div
+							class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 text-center border-2 border-transparent hover:border-green-200 transform hover:scale-105 h-full flex flex-col"
+						>
+							<div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">📥</div>
+							<h2 class="text-3xl font-bold text-gray-900 mb-3">ファイルを取り出す</h2>
+							<p class="text-gray-600 mb-6 leading-relaxed flex-1">
+								取り出しコードをお持ちですか？ここに入力すると、共有されたファイルやテキストを開いてダウンロードできます。
+							</p>
+							<div
+								class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold group-hover:bg-green-600 transition-colors duration-300"
+							>
+								コードを入力
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="mt-12 text-center">
+					<p class="text-gray-500 text-sm">
+						受け取りにログインは不要です。アップロードには管理者のサインインが必要です。期限付きの共有は有効期限後に削除されます。
+					</p>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

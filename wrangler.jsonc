@@ -1,0 +1,52 @@
+/**
+ * PocketChest — one Worker serving both the API (/api/*) and the static frontend (dist/).
+ * All data lives in the R2 bucket; there is no database.
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "pocket-chest",
+	"main": "src/worker/index.ts",
+	"compatibility_date": "2025-08-13",
+	"observability": {
+		"enabled": true,
+	},
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"html_handling": "auto-trailing-slash",
+		"not_found_handling": "404-page",
+		"run_worker_first": ["/api/*"],
+	},
+	"r2_buckets": [
+		{
+			"bucket_name": "pocket-chest",
+			"binding": "R2_STORAGE","preview_bucket_name": "pocket-chest",
+		},
+	],
+	// Per-client limits, per Cloudflare location (approximate). Limit and period are per client address.
+	"ratelimits": [
+		{ "name": "AUTH_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } },
+		{ "name": "RETRIEVE_LIMITER", "namespace_id": "1002", "simple": { "limit": 30, "period": 60 } },
+		{ "name": "UPLOAD_LIMITER", "namespace_id": "1003", "simple": { "limit": 60, "period": 60 } },
+		// Multipart parts, keyed by upload and client: far above what a real upload sends (20 MiB parts), so only repeats are stopped
+		{ "name": "PART_LIMITER", "namespace_id": "1004", "simple": { "limit": 600, "period": 60 } },
+		// All multipart parts from one client address, whatever the file: opening many files does not multiply the allowance
+		{ "name": "PART_TOTAL_LIMITER", "namespace_id": "1005", "simple": { "limit": 1200, "period": 60 } },
+		// File downloads, per file and client address: generous for a real download (one request, a few retries), stops loops
+		{ "name": "DOWNLOAD_LIMITER", "namespace_id": "1006", "simple": { "limit": 120, "period": 60 } },
+	],
+	// No plain variables are needed. Secrets (JWT_SECRET, ADMIN_BOOTSTRAP_PASSWORD) are set by `npm run deploy` and never
+	// appear here. Optional variables you may add: PASSKEY_RP_ID (the one hostname passkeys are bound to), INSTANCE_ID.
+	// Uncomment and configure for custom domain:
+	// "routes": [
+	// 	{
+	// 		"pattern": "share.yourdomain.com",
+	// 		"custom_domain": true
+	// 	}
+	// ],
+	"workers_dev": true,
+	// Hourly cleanup of expired chests and abandoned upload sessions
+	"triggers": {
+		"crons": ["0 * * * *"],
+	},
+}

@@ -1,0 +1,19 @@
+@import 'tailwindcss' source(none);
+/* Scan only the web sources: dist/, .wrangler/ and node_modules/ are never included */
+@source "../";
+
+@layer base {
+	body {
+		font-family:
+			ui-sans-serif,
+			system-ui,
+			-apple-system,
+			BlinkMacSystemFont,
+			'Segoe UI',
+			'PingFang SC',
+			'Microsoft YaHei',
+			'Noto Sans CJK SC',
+			'Hiragino Sans',
+			sans-serif;
+	}
+}
